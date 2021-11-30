@@ -1,0 +1,75 @@
+# TODO: replace with ob1 bazel base framework utilities
+cc_library(
+    name = "ob1-util",
+    visibility = ["//visibility:public"],
+
+    srcs = glob(["src/ob1-util/**/*.c*", "src/ob1-util/**/*.h*"]),
+    hdrs = glob(["include/ob1-util/**/*.h*"]),
+    includes = ["include/ob1-util"],
+    strip_include_prefix = "include",
+
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++20"],
+        "//conditions:default": ["-std=c++20"],
+    }),
+    deps = [
+        "@spdlog//:headers",
+        "@yaml-cpp",
+    ],
+)
+
+cc_library(
+    name = "syndicate",
+    visibility = ["//visibility:public"],
+
+    srcs = glob(["src/syndicate/**/*.c*", "src/syndicate/**/*.h*"]),
+    hdrs = glob(["include/syndicate/**/*.h*"]),
+    includes = ["include/syndicate"],
+    strip_include_prefix = "include",
+
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++20"],
+        "//conditions:default": ["-std=c++20"],
+    }),
+    deps = [
+        ":ob1-util",
+        #"@flecs",
+    ],
+)
+
+cc_library(
+    name = "lisp",
+    visibility = ["//visibility:public"],
+
+    srcs = glob(["src/lisp/**/*.c*", "src/lisp/**/*.h*"]),
+    hdrs = glob(["include/lisp/**/*.h*"]),
+    includes = ["include/lisp"],
+    strip_include_prefix = "include",
+
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++20"],
+        "//conditions:default": ["-std=c++20"],
+    }),
+    deps = [
+        ":ob1-util",
+        ":syndicate",
+        "@pegtl",
+    ],
+)
+
+cc_binary(
+    name = "cult",
+    srcs = glob([
+        "src/cult/*.c*",
+        "src/cult/*.h*",
+    ]),
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/std:c++20"],
+        "//conditions:default": ["-std=c++20"],
+    }),
+    deps = [
+        ":ob1-util",
+        ":syndicate",
+        ":lisp",
+    ],
+)
