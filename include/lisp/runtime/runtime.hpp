@@ -4,43 +4,49 @@
 namespace cult::lisp
 {
     // a context, required for most evaluation features
-    class LispContext;
+    class CultContext;
     // a "world", this contains the entire execution environment
-    class LispEnvironment;
+    class CultEnvironment;
     // a thread local wrapper around the world/environment, has a context
-    class LispThreadEnvironment;
+    class CultThreadEnvironment;
     // a call chain to a context, this is the first argument for most "inline lisp" functions
-    class LispContextChain;
+    class CultContextChain;
+}
 
+#include "lisp/interpreter/interpreter.hpp"
 
+namespace
+{
     // a "world", this contains the entire execution environment
-    class LispContext
+    class CultContext
     {
     public:
-        LispEnvironment* environment;
-        LispThreadEnvironment* thread;
+        CultEnvironment* environment;
+        CultThreadEnvironment* thread;
+
+
+        CultInterpreter interpreter;
+    };
+
+    // a "world", this contains the entire execution environment
+    class CultEnvironment
+    {
+    public:
+        std::vector<CultThreadEnvironment*> known_threads;
 
     };
 
     // a "world", this contains the entire execution environment
-    class LispEnvironment
+    class CultThreadEnvironment
     {
     public:
-        std::vector<LispThreadEnvironment*> known_threads;
-
+        static thread_local CultThreadEnvironment* l_this;
     };
 
     // a "world", this contains the entire execution environment
-    class LispThreadEnvironment
+    class CultContextChain
     {
     public:
-        static thread_local LispThreadEnvironment* l_this;
-    };
-
-    // a "world", this contains the entire execution environment
-    class LispContextChain
-    {
-    public:
-        LispContext* base_context;
+        CultContext* base_context;
     };
 }
