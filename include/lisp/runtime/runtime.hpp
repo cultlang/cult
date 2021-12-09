@@ -15,7 +15,7 @@ namespace cult::lisp
 
 #include "lisp/interpreter/interpreter.hpp"
 
-namespace
+namespace cult::lisp
 {
     // a "world", this contains the entire execution environment
     class CultContext
