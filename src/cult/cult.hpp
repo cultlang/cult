@@ -6,5 +6,6 @@ namespace cult
     class CultRails
     {
 
+        
     };
 }

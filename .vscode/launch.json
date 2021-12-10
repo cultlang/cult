@@ -9,11 +9,15 @@
             "type": "cppvsdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bazel-bin/cult.exe",
-            "args": [],
+            "args": [
+                "-c",
+                "((((a b c) d) e) {} [])"
+            ],
+            "preLaunchTask": "bazel build :cult",
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "console": "externalTerminal"
+            "console": "internalConsole"
         }
     ]
 }

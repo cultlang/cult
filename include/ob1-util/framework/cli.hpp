@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+
 namespace util
 {
     struct CliInterface
@@ -45,7 +46,13 @@ namespace util
 
         inline void run()
         {
+            
 
+            // cult::lisp::ParserEdn parser;
+            // auto batch = std::make_unique<cult::lisp::ParserEdn::Batch>("((((a b c) d) e) {} [])");
+            // batch = parser.process(std::move(batch));
+
+            // std::cout << batch->nodes->size() << std::endl;
         }
     };
 }
